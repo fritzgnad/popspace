@@ -5,6 +5,8 @@ import { MuteIconSmall } from '@components/icons/MuteIconSmall';
 import Publication from '@components/Publication/Publication';
 import { useSpeakingStates } from '@hooks/useSpeakingStates/useSpeakingStates';
 import { makeStyles, Typography, useTheme } from '@material-ui/core';
+import { RemoveCircleOutline } from '@material-ui/icons';
+import { useTranslation } from 'react-i18next';
 import { useCanvasObject } from '@providers/canvas/CanvasObject';
 import { useSpeakingState } from '@src/media/hooks';
 import * as React from 'react';
@@ -68,6 +70,21 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.pxToRem(16),
     color: theme.palette.brandColors.cherry.bold,
   },
+  // status pill in place of the voice indicator, centered on the bubble's bottom edge
+  doNotDisturb: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 4,
+    padding: '2px 8px',
+    borderRadius: 12,
+    whiteSpace: 'nowrap',
+    fontSize: theme.typography.pxToRem(11),
+    fontWeight: theme.typography.fontWeightMedium as any,
+    lineHeight: 1.4,
+    color: theme.palette.common.white,
+    backgroundColor: theme.palette.brandColors.cherry.bold,
+    boxShadow: theme.mainShadows.surface,
+  },
   voiceWave: {
     width: 24,
     height: 24,
@@ -109,6 +126,8 @@ export const PersonBubble = React.forwardRef<HTMLDivElement, IPersonBubbleProps>
     const userId = person?.id;
     const displayIdentity = person?.actor.displayName;
     const avatarName = person?.actor.avatarName;
+    const doNotDisturb = !!person?.participantState?.doNotDisturb;
+    const { t } = useTranslation();
 
     // determine background color based on avatar
     const backgroundColor = useAvatarBackgroundColor(avatarName);
@@ -144,7 +163,12 @@ export const PersonBubble = React.forwardRef<HTMLDivElement, IPersonBubbleProps>
             <Typography className={classes.name}>{displayIdentity}</Typography>
           </PersonBubbleLabel>
           <PersonBubbleVoiceIndicator isVideoOn={isVideoOn}>
-            {isMicOn ? (
+            {doNotDisturb ? (
+              <span className={classes.doNotDisturb}>
+                <RemoveCircleOutline fontSize="inherit" />
+                {t('features.mediaControls.doNotDisturbStatus')}
+              </span>
+            ) : isMicOn ? (
               <AudioIndicator className={classes.voiceWave} isActive={isSpeaking} variant="sine" />
             ) : (
               <MuteIconSmall className={classes.mutedIcon} fontSize="inherit" />

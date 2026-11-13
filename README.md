@@ -16,7 +16,6 @@ To install PopSpace you will need:
 - An Audio/Video media provider:
   - A deployed [LiveKit server](https://livekit.io/)
   - A LiveKit Cloud account
-  - Or, a Twilio account
 ---
 
 ## What's new in this fork
@@ -27,7 +26,7 @@ To install PopSpace you will need:
 - **Room files and notepads are private to the room.** Uploaded files can only be downloaded, and notepads only opened or edited, by members of their room (guests who opened a public link, or entered a password room's password), its creator and admins. A copied file URL doesn't work for anyone else. Uploads require room membership and are limited to 30 MB. The file routes can no longer be used to read files outside the upload folder (this previously exposed the database).
 - **Docker Compose support.** `docker-compose.yml` builds the image from source, keeps data in a named volume and can start a bundled LiveKit dev server, so one command runs everything.
 - **One `.env` for everything.** `yarn dev`, `yarn db-init` and `docker compose` all read the root `.env` (see `.env.example`).
-- **Pinned toolchain.** Every workspace uses Node 16.16.0 / Yarn 1.22.11 through [Volta](https://volta.sh).
+- **Pinned toolchain.** Every workspace uses Node 24.22.1 / Yarn 1.22.22 through [Volta](https://volta.sh).
 
 ## Running with Docker Compose (Recommended)
 
@@ -43,6 +42,7 @@ Then open http://localhost:8888, sign in with the admin credentials from `.env`,
 - `COMPOSE_PROFILES=livekit` in `.env` also starts a LiveKit server on ports 7880 (signaling), 7881 and 7882/udp (media), using `LIVEKIT_API_KEY` / `LIVEKIT_SECRET_KEY` from `.env` as its key pair (the secret needs at least 32 characters). For a real deployment, generate a new key pair, set `LIVEKIT_NODE_IP` to the host's public IP and open 7881/tcp and 7882/udp in the firewall. Or remove that line and point the `LIVEKIT_` / `REACT_APP_LIVEKIT_ENDPOINT` variables at your own LiveKit server or LiveKit Cloud.
 - Data (SQLite databases and uploaded files) lives in the `popspace-data` volume. `docker compose down` keeps it, and `docker compose down -v` deletes it.
 - Useful commands: `docker compose logs -f popspace`, `docker compose restart popspace`, `docker compose up -d --build` (after pulling changes).
+- `yarn smoke-test` checks a running stack end to end. It signs in as the admin from `.env`, creates a room, uploads an image, creates and edits a notepad, and confirms that strangers can't read the notepad or the file. Then it deletes what it created. Each run also leaves a few anonymous guest accounts behind, the same kind every visitor gets. Behind the reverse proxy, run it with `SMOKE_BASE_URL=https://your.domain yarn smoke-test`.
 
 ### Building and publishing the image yourself
 
@@ -109,14 +109,9 @@ docker pull ghcr.io/with-labs/popspace:latest
 The following environment variables are required to run PopSpace in a Docker container or running locally. This assumes a persistent volume is mounted at `/data`:
 
 ```
-# if you use LiveKit, define the following vars
 REACT_APP_LIVEKIT_ENDPOINT=https://your-livekit-instance.com
 LIVEKIT_API_KEY=<your livekit server key>
 LIVEKIT_SECRET_KEY=<your livekit server secret key>
-# if you use Twilio, define these instead.
-# TWILIO_ACCOUNT_SID
-# TWILIO_API_KEY_SECRET
-# TWILIO_API_KEY_SID
 
 # yes, these have different formats, sorry...
 # NOTE: connection_limit=1 is vital for DATABASE_URL!!

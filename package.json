@@ -8,17 +8,18 @@
     "noodle-api",
     "noodle-shared",
     "unicorn",
-    "unicorn/component"
+    "unicorn/component",
+    "pop-media/sdk",
+    "pop-media/livekit"
   ],
   "resolutions": {
-    "babel-loader": "8.1.0",
-    "jest": "26.6.0",
-    "webpack": "4.44.2"
+    "**/next/postcss": "8.5.32"
   },
   "scripts": {
     "precontainerize": "yarn build-lib && yarn build",
     "build": "concurrently npm:build:*",
-    "build-lib": "concurrently npm:build-lib:*",
+    "build-lib": "yarn build-media && concurrently npm:build-lib:*",
+    "build-media": "yarn workspace @withso/pop-media-sdk build && yarn workspace @withso/pop-media-livekit build",
     "build:app": "yarn workspace noodle-app build",
     "build:unicorn": "yarn workspace unicorn build",
     "build-lib:shared": "yarn workspace @withso/noodle-shared build",
@@ -29,14 +30,15 @@
     "dev:api": "yarn workspace noodle-api dev",
     "dev:hermes": "yarn workspace hermes dev",
     "dev:unicorn": "yarn workspace unicorn dev",
-    "db-init": "env-cmd -f .env --silent yarn workspace @withso/noodle-shared db:init"
+    "db-init": "env-cmd -f .env --silent yarn workspace @withso/noodle-shared db:init",
+    "smoke-test": "env-cmd -f .env --silent node deploy/smoke-test.js"
   },
   "devDependencies": {
     "concurrently": "^6.4.0",
     "env-cmd": "10.1.0"
   },
   "volta": {
-    "node": "16.16.0",
-    "yarn": "1.22.11"
+    "node": "24.22.1",
+    "yarn": "1.22.22"
   }
 }

@@ -1,4 +1,4 @@
-FROM node:16.16.0
+FROM node:24.22.1
 
 WORKDIR /usr/src/app
 
@@ -10,14 +10,16 @@ COPY noodle-shared/package.json ./noodle-shared/package.json
 COPY unicorn/package.json ./unicorn/package.json
 COPY unicorn/component/package.json ./unicorn/component/package.json
 COPY file-upload/package.json ./file-upload/package.json
+COPY pop-media/sdk/package.json ./pop-media/sdk/package.json
+COPY pop-media/livekit/package.json ./pop-media/livekit/package.json
 COPY .git ./.git
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV CYPRESS_INSTALL_BINARY=0
 RUN yarn install --frozen-lockfile
 # install pm2 to run server processes
-RUN npm install pm2 -g
-RUN pm2 install pm2-graceful-intercom
+RUN npm install -g pm2@6.0.14
+RUN pm2 install pm2-graceful-intercom@1.0.1
 
 COPY noodle ./noodle
 COPY hermes ./hermes
@@ -25,6 +27,7 @@ COPY noodle-api ./noodle-api
 COPY noodle-shared ./noodle-shared
 COPY unicorn ./unicorn
 COPY file-upload ./file-upload
+COPY pop-media ./pop-media
 
 RUN yarn workspace @withso/noodle-shared prisma:generate
 
