@@ -1,1 +1,1 @@
-export const useRoomStore = vi.fn().mockReturnValue(null);
+export const useRoomStore = jest.fn().mockReturnValue(null);

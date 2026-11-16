@@ -1,7 +1,7 @@
 import { SvgIcon, SvgIconProps } from '@material-ui/core';
 import * as React from 'react';
 
-import Glyph from './svg/mute.svg?react';
+import { ReactComponent as Glyph } from './svg/mute.svg';
 
 export interface IMuteIconProps extends SvgIconProps {}
 

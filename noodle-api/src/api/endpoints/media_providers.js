@@ -1,7 +1,11 @@
-const mediaProviders = {
-  livekit: {
+const mediaProviders = {};
+
+if (process.env.LIVEKIT_API_KEY) {
+  mediaProviders.livekit = {
     endpoint: process.env.REACT_APP_LIVEKIT_ENDPOINT
   }
+} else if (process.env.TWILIO_ACCOUNT_SID) {
+  mediaProviders.twilio = {};
 }
 
 class MediaProvider {

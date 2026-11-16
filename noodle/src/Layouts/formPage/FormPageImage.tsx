@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { Theme, makeStyles, useMediaQuery } from '@material-ui/core';
 import clsx from 'clsx';
 import * as React from 'react';

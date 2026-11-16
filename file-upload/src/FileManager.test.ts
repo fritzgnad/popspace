@@ -1,14 +1,13 @@
 import { FileManager } from './FileManager';
 
 jest.mock('./imageProcessing');
-jest.mock('crypto', () => ({
-  ...jest.requireActual('crypto'),
-  randomUUID: () => 'mock-uuid',
-}));
+jest.mock('uuid');
 
 const mockS3 = {
   storeFileBuffer: jest.fn((key: string) =>
-    Promise.resolve(`https://mock-s3.com/${key}`),
+    Promise.resolve({
+      Location: `https://mock-s3.com/${key}`,
+    }),
   ),
   deleteFile: jest.fn().mockResolvedValue({}),
 };

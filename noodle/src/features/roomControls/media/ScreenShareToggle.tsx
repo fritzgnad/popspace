@@ -7,7 +7,6 @@ import { useLocalTrack } from '@src/media/hooks';
 import { TrackType } from '@withso/pop-media-sdk';
 import { media } from '@src/media';
 import { makeStyles, useTheme } from '@material-ui/core';
-import { useIsDoNotDisturb } from '@hooks/useDoNotDisturb/useDoNotDisturb';
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -23,11 +22,10 @@ export const ScreenShareToggle = (props: { className?: string }) => {
   const { t } = useTranslation();
   const classes = useStyles();
   const isSharingOn = !!useLocalTrack(TrackType.Screen);
-  const doNotDisturb = useIsDoNotDisturb();
   const toggleSharingOn = () => {
     if (isSharingOn) {
       media.stopScreenShare();
-    } else if (!doNotDisturb) {
+    } else {
       media.startScreenShare();
     }
   };
@@ -40,7 +38,6 @@ export const ScreenShareToggle = (props: { className?: string }) => {
           value="video"
           selected={isSharingOn}
           onChange={toggleSharingOn}
-          disabled={doNotDisturb}
           data-test-id="toggleScreenShare"
           {...props}
         >

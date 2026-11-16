@@ -1,5 +1,5 @@
 import { CheckboxField, ICheckboxFieldProps } from './CheckboxField';
-import type { StoryFn as Story } from '@storybook/react-vite';
+import { Story } from '@storybook/react/types-6-0';
 import React from 'react';
 
 export default {

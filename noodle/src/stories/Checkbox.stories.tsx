@@ -1,5 +1,5 @@
 import { Checkbox, CheckboxProps } from '@material-ui/core';
-import type { StoryFn as Story } from '@storybook/react-vite';
+import { Story } from '@storybook/react/types-6-0';
 import React from 'react';
 
 export default {

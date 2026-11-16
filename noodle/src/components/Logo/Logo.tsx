@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from '@components/Link/Link';
 import { RouteNames } from '@constants/RouteNames';
-import Logomark from '@src/images/logo.svg?react';
+import { ReactComponent as Logomark } from '@src/images/logo.svg';
 import { EventNames } from '@analytics/constants';
 import { Analytics } from '@analytics/Analytics';
 import { Box } from '@material-ui/core';

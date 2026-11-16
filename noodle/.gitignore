@@ -39,6 +39,3 @@ junit.xml
 .netlify
 
 .eslintcache
-
-# storybook
-storybook-static

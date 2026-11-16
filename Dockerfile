@@ -10,8 +10,6 @@ COPY noodle-shared/package.json ./noodle-shared/package.json
 COPY unicorn/package.json ./unicorn/package.json
 COPY unicorn/component/package.json ./unicorn/component/package.json
 COPY file-upload/package.json ./file-upload/package.json
-COPY pop-media/sdk/package.json ./pop-media/sdk/package.json
-COPY pop-media/livekit/package.json ./pop-media/livekit/package.json
 COPY .git ./.git
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
@@ -27,7 +25,6 @@ COPY noodle-api ./noodle-api
 COPY noodle-shared ./noodle-shared
 COPY unicorn ./unicorn
 COPY file-upload ./file-upload
-COPY pop-media ./pop-media
 
 RUN yarn workspace @withso/noodle-shared prisma:generate
 

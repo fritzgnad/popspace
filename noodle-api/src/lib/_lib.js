@@ -21,6 +21,7 @@ const lib = {
   cleanup: async () => {
   },
   opengraph: require('./opengraph.js'),
+  s3: require('./s3.js')
 }
 
 module.exports = lib

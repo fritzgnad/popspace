@@ -66,7 +66,6 @@ export interface OutgoingUpdateParticipantMessage extends BaseOutgoingSocketMess
     participantState: {
       displayName?: string;
       avatarName?: string;
-      doNotDisturb?: boolean;
     };
   };
 }

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SvgIcon, SvgIconProps } from '@material-ui/core';
-import Glyph from './svg/minimize.svg?react';
+import { ReactComponent as Glyph } from './svg/minimize.svg';
 
 export interface IMinimizeIconProps extends SvgIconProps {}
 

@@ -5,12 +5,12 @@ import { emptyState } from './roomStateStore';
 import { IncomingAuthResponseMessage } from './types/socketProtocol';
 import { WidgetType } from './types/widgets';
 
-vi.mock('./SocketConnection');
-vi.mock('@utils/logger');
+jest.mock('./SocketConnection');
+jest.mock('@utils/logger');
 
 describe('RoomStateCacheApi', () => {
-  const set = vi.fn();
-  const get = vi.fn();
+  const set = jest.fn();
+  const get = jest.fn();
   const cache = new RoomStateCacheApi(set, get, emptyState);
 
   // invokes the most recent cache changes on an empty state copy

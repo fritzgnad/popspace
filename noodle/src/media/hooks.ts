@@ -1,7 +1,6 @@
 import { media } from '.';
 import { TrackType } from '@withso/pop-media-sdk';
 import { useEffect, useState } from 'react';
-import { isDoNotDisturb } from '@hooks/useDoNotDisturb/useDoNotDisturb';
 
 export function useCameraControl() {
   const cameraTrack = useLocalTrack(TrackType.Camera);
@@ -11,7 +10,7 @@ export function useCameraControl() {
   const toggleCamera = async () => {
     if (cameraTrack) {
       media.stopCamera();
-    } else if (!isDoNotDisturb()) {
+    } else {
       media.startCamera();
     }
   };
@@ -35,7 +34,7 @@ export function useMicControl() {
   const toggleMic = async () => {
     if (micTrack) {
       media.stopMicrophone();
-    } else if (!isDoNotDisturb()) {
+    } else {
       media.startMicrophone();
     }
   };

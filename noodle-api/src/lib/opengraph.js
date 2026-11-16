@@ -1,5 +1,6 @@
 const axios = require("axios").default
 const cheerio = require("cheerio")
+const getFavicons = require("node-get-favicons")
 
 /**
  * Provides metadata for webpage URLs. Right now this provides
@@ -50,7 +51,7 @@ class OpenGraph {
      */
     const { title } = this.extractMetadata(html)
     const isProvidedUrlIframeCompatible = this.isIframeCompatible(res)
-    const icon = this.getDefaultFavicon(html, url)
+    const icon = await this.getDefaultFavicon(html, url)
 
     return {
       title: title || url,
@@ -96,24 +97,15 @@ class OpenGraph {
     }
   }
 
-  /**
-   * Picks the page's declared icon, falling back to /favicon.ico.
-   *
-   * @param {string} html - Raw HTML string
-   * @param {string} url - URL the HTML was loaded from, to resolve relative links
-   * @returns {string|null}
-   */
-  getDefaultFavicon(html, url) {
+  async getDefaultFavicon(html, url) {
+    // this lib threw an error once, so wrapping it for safety.
     try {
-      const $ = cheerio.load(html)
-      const href = $('link[rel~="icon"], link[rel="apple-touch-icon"]')
-        .map((_, el) => $(el).attr("href"))
-        .get()
-        .find(Boolean)
-      return new URL(href || "/favicon.ico", url).href
+      const icons = await getFavicons.byHtml(html, url)
+      if (icons && icons[0]) return icons[0].href
     } catch (err) {
-      return null
+      // ignore any errors
     }
+    return null;
   }
 }
 

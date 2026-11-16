@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SvgIcon, SvgIconProps } from '@material-ui/core';
-import Glyph from './svg/close.svg?react';
+import { ReactComponent as Glyph } from './svg/close.svg';
 
 export type CloseIconProps = SvgIconProps;
 

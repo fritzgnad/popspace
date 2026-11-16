@@ -4,10 +4,8 @@ export interface ActorShape {
   avatarName: string;
 }
 
-export interface ParticipantState {
-  /** Do not disturb: media is off and the user hears nobody */
-  doNotDisturb?: boolean;
-}
+/** Empty... for now. */
+export interface ParticipantState {}
 
 export interface ParticipantShape {
   /** Represents the active client session for this view of the user */

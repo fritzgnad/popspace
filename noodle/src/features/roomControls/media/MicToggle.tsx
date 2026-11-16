@@ -84,11 +84,9 @@ export const MicToggle = (props: IMicToggleProps) => {
     KeyShortcut.ToggleMute,
     (ev) => {
       ev.preventDefault();
-      // the shortcut does nothing while the button is disabled
-      if (busy) return;
       toggleMicOn();
     },
-    [toggleMicOn, busy]
+    [toggleMicOn]
   );
 
   const [menuAnchor, setMenuAnchor] = React.useState<HTMLElement | null>(null);

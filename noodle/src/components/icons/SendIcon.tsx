@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SvgIcon, SvgIconProps } from '@material-ui/core';
-import Glyph from './svg/send.svg?react';
+import { ReactComponent as Glyph } from './svg/send.svg';
 
 export type SendIconProps = SvgIconProps;
 
