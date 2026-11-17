@@ -1,5 +1,6 @@
 import { YoutubeWidgetShape, YoutubeWidgetState } from '@api/roomState/types/widgets';
 import { useSpatialAudioVolume } from '@hooks/useSpatialAudioVolume/useSpatialAudioVolume';
+import { useIsDoNotDisturb } from '@hooks/useDoNotDisturb/useDoNotDisturb';
 import * as React from 'react';
 
 import { PlayState } from '../common/MediaControls';
@@ -26,7 +27,7 @@ export function useSyncYoutube({
   state,
   onChange,
   onLoad,
-  isMuted,
+  isMuted: isMutedProp,
 }: {
   state: YoutubeWidgetShape;
   onChange: (data: Partial<YoutubeWidgetState>) => any;
@@ -44,6 +45,10 @@ export function useSyncYoutube({
     playStartedTimestampUtc: null,
     volume: 0.5,
   };
+
+  // do not disturb mutes everything in the room for this user
+  const doNotDisturb = useIsDoNotDisturb();
+  const isMuted = isMutedProp || doNotDisturb;
 
   const playState = isPlaying ? PlayState.Playing : PlayState.Paused;
   const [duration, setDuration] = React.useState(0);

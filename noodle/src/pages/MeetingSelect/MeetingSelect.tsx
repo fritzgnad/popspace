@@ -42,6 +42,23 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 500,
     paddingBottom: theme.spacing(4),
   },
+  // admin actions get their own dark color each, so they stand apart from the templates
+  manageRoomsButton: {
+    color: theme.palette.common.white,
+    backgroundColor: theme.palette.brandColors.blueberry.ink,
+    padding: theme.spacing(1, 2),
+    '&:hover, &:focus': {
+      backgroundColor: theme.palette.brandColors.lavender.ink,
+    },
+  },
+  signOutButton: {
+    color: theme.palette.common.white,
+    backgroundColor: theme.palette.brandColors.cherry.ink,
+    padding: theme.spacing(1, 2),
+    '&:hover, &:focus': {
+      backgroundColor: theme.palette.brandColors.ink.regular,
+    },
+  },
 }));
 
 const MIN_ROOM_PASSWORD_LENGTH = 12;
@@ -167,10 +184,14 @@ export const MeetingSelect: React.FC<IMeetingSelectProps> = ({
       <MeetingTemplatePicker onSelect={setSelected} selected={selected} />
       {client.actor?.admin && (
         <Box mt={4} display="flex" gridGap={8}>
-          <Button variant="text" onClick={() => history.push(RouteNames.ROOM_MANAGEMENT)}>
+          <Button
+            variant="text"
+            className={classes.manageRoomsButton}
+            onClick={() => history.push(RouteNames.ROOM_MANAGEMENT)}
+          >
             {t('pages.meetingSelect.manageRooms')}
           </Button>
-          <Button variant="text" onClick={() => client.adminLogout()}>
+          <Button variant="text" className={classes.signOutButton} onClick={() => client.adminLogout()}>
             {t('pages.meetingSelect.signOut')}
           </Button>
         </Box>

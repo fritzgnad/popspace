@@ -38,6 +38,15 @@ import { RoomNameField } from './RoomNameField';
 const MIN_ROOM_PASSWORD_LENGTH = 12;
 
 const useStyles = makeStyles((theme) => ({
+  // dark like the sign out button on the templates page
+  signOutButton: {
+    color: theme.palette.common.white,
+    backgroundColor: theme.palette.brandColors.cherry.ink,
+    padding: theme.spacing(1, 2),
+    '&:hover, &:focus': {
+      backgroundColor: theme.palette.brandColors.ink.regular,
+    },
+  },
   section: {
     width: '100%',
     padding: theme.spacing(3),
@@ -271,7 +280,7 @@ export const RoomManagement: React.FC = () => {
             {t('pages.roomManagement.templatesLink')}
           </Button>
         </Link>
-        <Button variant="text" onClick={() => client.adminLogout()}>
+        <Button variant="text" className={classes.signOutButton} onClick={() => client.adminLogout()}>
           {t('pages.meetingSelect.signOut')}
         </Button>
       </Box>
