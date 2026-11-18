@@ -320,9 +320,10 @@ export class ApiCoreClient extends EventEmitter {
   }) {
     const { service, method, endpoint, data } = opts;
 
-    // timeout requests after 15s
+    // timeout requests after 15s, uploads after 5 minutes since a large file on a slow connection takes a while
+    const isUpload = opts.contentType === 'multipart/form-data';
     const abortController = new AbortController();
-    const timeout = setTimeout(() => abortController.abort(), 15_000);
+    const timeout = setTimeout(() => abortController.abort(), isUpload ? 5 * 60_000 : 15_000);
 
     try {
       const analyticsRef = getRef();
